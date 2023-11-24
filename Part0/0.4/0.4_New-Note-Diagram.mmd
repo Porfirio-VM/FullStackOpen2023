@@ -1,0 +1,34 @@
+sequenceDiagram
+    participant Browser
+    participant Form
+    participant Server
+
+    Form->>Server: HTTP POST to https://studies.cs.helsinki.fi/exampleapp/new_note
+    activate Server
+    Note right of Form: User enters content, presses submit, then triggers the '/new_note' endpoint
+    Server-->>Browser: Server responds with a redirect to /exampleapp/notes (Status 302)
+    deactivate Server
+    Note right of Form: Browser follows the redirect and goes to '/notes'.
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate Server
+    Server-->>Browser: HTML document
+    deactivate Server
+    Note right of Browser: Browser renders the HTML page.
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate Server
+    Server-->>Browser: CSS file
+    deactivate Server
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+    activate Server
+    Server-->>Browser: JavaScript file
+    deactivate Server
+    Note right of Browser: Browser starts executing JavaScript.
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate Server
+    Server-->>Browser: [{ "content": "Hello World", "date": "2023-04-10" }, ... ]
+    deactivate Server
+    Note right of Browser: Browser executes callback to render notes.

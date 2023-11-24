@@ -1,0 +1,26 @@
+sequenceDiagram
+    participant Browser
+    participant Form
+    participant Server
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate Server
+    Server-->>Browser: HTML document (status 200)
+    deactivate Server
+    Note right of Browser: Browser renders the HTML page.
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate Server
+    Server-->>Browser: CSS file (status 200)
+    deactivate Server
+
+    Browser->>Server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    activate Server
+    Server-->>Browser: JavaScript file (status 200)
+    deactivate Server
+    
+    Form->>Server : When submit is pressed, it triggers an event that redraws the notes and then stores the note.
+    activate Server
+    Server->>Form : response 201 Created
+    deactivate Server
+    Note left of Server: When the note is created, only render the notes and does not reload the page
